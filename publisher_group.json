@@ -1,0 +1,38 @@
+[
+    {
+        "norm_publisher": "Autocad Inc.",
+        "norm_product": "AutoCAD LT",
+        "discovery_model": "84600ACDLT_2019_0F 2019",
+        "publisher": "adskflex",
+        "product": "84600ACDLT_2019_0F"
+    },
+    {
+        "norm_publisher": "Autocad Inc.",
+        "norm_product": "AutoCAD Architecture",
+        "discovery_model": "86137ARCHDESK_2015_0F 2015",
+        "publisher": "adskflex",
+        "product": "86137ARCHDESK_2015_0F"
+    },
+    {
+        "norm_publisher": "Autocad Inc.",
+        "norm_product": "Inventor Professional",
+        "discovery_model": "87385INVPROSA_2019_0F 2019",
+        "publisher": "adskflex",
+        "product": "87385INVPROSA_2019_0F"
+    },
+
+    {
+        "norm_publisher": "ESRI",
+        "norm_product": "3D Analyst Engine",
+        "discovery_model": "3DEngine 10.7.1",
+        "publisher": "ARCGIS",
+        "product": "ArcGIS Engine"
+    },
+    {
+        "norm_publisher": "ESRI",
+        "norm_product": "ArcGIS Pro",
+        "discovery_model": "3DAnalystP",
+        "publisher": "ARCGIS",
+        "product": "3D Analyst Pro"
+    }
+]
