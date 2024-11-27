@@ -3,51 +3,9 @@ import xml.etree.ElementTree as ET
 import random
 import hashlib
 from datetime import datetime
-import json
 import pandas as pd
 
-def load_computer_names_from_csv(file_name):
-    try:
-        data = pd.read_csv(file_name)
-        return data.to_dict(orient="records")
-    except (FileNotFoundError, pd.errors.EmptyDataError) as e:
-        st.error(f"Error loading CSV file: {e}")
-        return []
-
-def load_discovery_names_from_csv(file_name):
-    try:
-        data = pd.read_csv(file_name)
-        return data.to_dict(orient="records")
-    except (FileNotFoundError, pd.errors.EmptyDataError) as e:
-        st.error(f"Error loading CSV file: {e}")
-        return []
-
-
-def load_publisher_groups_from_csv(file_name):
-    try:
-        data = pd.read_csv(file_name)
-        return data.to_dict(orient="records")
-    except (FileNotFoundError, pd.errors.EmptyDataError) as e:
-        st.error(f"Error loading CSV file: {e}")
-        return []
-    
-def load_group_from_csv(file_name):
-    try:
-        data = pd.read_csv(file_name)
-        return data.to_dict(orient="records")
-    except (FileNotFoundError, pd.errors.EmptyDataError) as e:
-        st.error(f"Error loading CSV file: {e}")
-        return []
-    
-def load_license_server_from_csv(file_name):
-    try:
-        data = pd.read_csv(file_name)
-        return data.to_dict(orient="records")
-    except (FileNotFoundError, pd.errors.EmptyDataError) as e:
-        st.error(f"Error loading CSV file: {e}")
-        return []
-    
-def load_license_type_from_csv(file_name):
+def load_data_from_csv(file_name):
     try:
         data = pd.read_csv(file_name)
         return data.to_dict(orient="records")
@@ -57,19 +15,25 @@ def load_license_type_from_csv(file_name):
 
 
 # Usage:
-COMPUTER_NAMES = load_computer_names_from_csv("user.csv")
-PUBLISHER_GROUPS = load_publisher_groups_from_csv("products.csv")
-DISCOVERY_MODELS = load_discovery_names_from_csv("discovery.csv")
-GROUP_NAMES = load_discovery_names_from_csv("group.csv")
-LICENSE_SERVER_VALUES = load_discovery_names_from_csv("license_server.csv")
-LICENSE_TYPE_VALUES= load_discovery_names_from_csv("license_type.csv")
+USER_NAMES = load_data_from_csv("user.csv")
+DISCOVERY_MODELS = load_data_from_csv("discovery.csv")
+GROUP_NAMES = load_data_from_csv("group.csv")
+LICENSE_SERVER_VALUES = load_data_from_csv("license_server.csv")
+LICENSE_TYPE_VALUES= load_data_from_csv("license_type.csv")
 
 
 
-if not PUBLISHER_GROUPS:
-    st.error("No Autodesk groups found. Ensure the 'publisher_group.json' file exists and contains valid data.")
-if not COMPUTER_NAMES:
-    st.error("No computer names found. Ensure the 'data.json' file exists and contains valid data.")
+if not USER_NAMES:
+    st.error("No user names found. Ensure the 'user.csv' file exists and contains valid data.")
+if not DISCOVERY_MODELS:
+    st.error("No discovery models found. Ensure the 'discovery.csv' file exists and contains valid data.")
+if not GROUP_NAMES:
+    st.error("No group names found. Ensure the 'group.csv' file exists and contains valid data.")
+if not LICENSE_SERVER_VALUES:
+    st.error("No license server found. Ensure the 'license_server.csv' file exists and contains valid data.")
+if not LICENSE_TYPE_VALUES:
+    st.error("No license type found. Ensure the 'license_type.csv' file exists and contains valid data.")
+
 
 # Other Fixed Values
 
@@ -80,11 +44,9 @@ def generate_unique_hash():
     return hashlib.md5(str(random.random()).encode()).hexdigest()
 
 def generate_xml_record(denial_num):
-    # Randomly select from AUTODESK_GROUPS
-    group = random.choice(PUBLISHER_GROUPS)
     
-    # Select a computer name and append "-PC"
-    users = random.choice(COMPUTER_NAMES)
+    #randomly select from csv files
+    users = random.choice(USER_NAMES)
     discovery = random.choice(DISCOVERY_MODELS)
     group = random.choice(GROUP_NAMES)
     license_server = random.choice(LICENSE_SERVER_VALUES)
@@ -95,7 +57,7 @@ def generate_xml_record(denial_num):
     ET.SubElement(denial, "additional_key")
     ET.SubElement(denial, "computer", display_value=users["computer_name"]).text = users["computer_sys_id"]
     ET.SubElement(denial, "denial_date").text = datetime.now().strftime("%Y-%m-%d")
-    ET.SubElement(denial, "denial_id").text = DENIAL_ID_TEMPLATE.format(denial_num + 100)  # Offset by 29 to start at 30
+    ET.SubElement(denial, "denial_id").text = DENIAL_ID_TEMPLATE.format(denial_num + 100)  # Offset by 100 to start at 101
     ET.SubElement(denial, "discovery_model", display_value=discovery["discovery_model"]).text = discovery["discovery_sys_id"]
     ET.SubElement(denial, "group", display_value=group["group"]).text = group["group_sys_id"]
     ET.SubElement(denial, "is_product_normalized").text = "true"
