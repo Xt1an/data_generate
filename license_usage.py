@@ -95,7 +95,7 @@ def generate_xml_record(discovery, quantity):
     ET.SubElement(license, "parent_id").text = ""
     ET.SubElement(license, "product").text = discovery["product"]
     ET.SubElement(license, "publisher").text = discovery["publisher"]
-    ET.SubElement(license, "quantity").text = str(int(quantity))
+    ET.SubElement(license, "quantity").text = str(int(quantity))   #change
     ET.SubElement(license, "source").text = "OpeniT"
     ET.SubElement(license, "start_date").text = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     ET.SubElement(license, "sys_created_by").text = "admin"
